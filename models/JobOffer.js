@@ -5,7 +5,7 @@ const JobOfferSchema = new mongoose.Schema({
     company_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     mentor_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     status: { type: String, required: true, enum: ['pending', 'accepted', 'rejected', 'canceled'], default: 'pending'},
-    type: { type: String, required: true, enum: ['direct', 'open'] },
+    type: { type: String, required: true, enum: ['direct', 'open'], default: 'direct' },
     created_at: {type: Date, default: Date.now },
     updated_at:{type: Date, default: Date.now }
 })
