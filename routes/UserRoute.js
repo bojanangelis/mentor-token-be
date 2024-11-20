@@ -7,8 +7,8 @@ const userController = require('../controllers/UserController')
 router.get('/', userController.getUsers);
 // so ova kreirame post user.
 router.post('/', userController.createUser);
-router.get('/:_id', userController.getUserByID)
-
+router.get('/:_id', userController.getUserByID);
+router.post('/login', userController.login);
 
 module.exports = router;
 
