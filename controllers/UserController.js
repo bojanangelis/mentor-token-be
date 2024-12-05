@@ -28,11 +28,34 @@ exports.createUser = async (req, res) => {
     try {
         //tuka e zapishuvanjeto vo baza user.save()
         const newUser = await user.save();
+        console.log(newUser)
         res.status(201).json(newUser)
     } catch(e) {
         res.status(500).json({  message: e.message  })
     }
 }
+
+exports.updateUser = async (req, res) => {
+    const { name, image } = req.body;
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params._id, // User ID from the request parameters
+            { name, image, updated_at: Date.now() }, // Fields to update
+            { new: true } // Return the updated user document
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json({
+            message: 'User updated successfully',
+            user: updatedUser
+        });
+    } catch (e) {
+        res.status(500).json({ message: e.message });
+    }
+};
 
 exports.login = async (req, res) => {
     console.log('enter login contorller')
@@ -51,7 +74,8 @@ exports.login = async (req, res) => {
         id: user._id,
         name: user.name,
         role: user.role,
-        email: user.email
+        email: user.email,
+        image: user.image,
     }, SECRET_KEY, 
     { expiresIn: '1h'} )
 
